@@ -1,10 +1,11 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Display from './components/display';
 import KeyBoard from './components/keyboard';
 import "./calc.css";
 import sound from "./media/click.mp3"
 
-export default class Calc extends React.Component {
+class Calc extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,6 +18,8 @@ export default class Calc extends React.Component {
 		this.backspace = this.backspace.bind(this);
 		this.soundClick = this.soundClick.bind(this);
 		this.res = this.res.bind(this);
+		this.sound = new Audio();
+		this.sound.src = sound;
 	}
 	
 	input (e) {
@@ -28,16 +31,18 @@ export default class Calc extends React.Component {
 			display = this.state.display.slice(0,-1);
 		}
 		this.prevSymbol = symbol;
+		this.props.dispatch({type: "ADD SYMBOL", symbol: symbol});
 		this.setState({
 			display: display + symbol,
 		});
 	}
 	plusMinus () {
 		let display = this.state.display;
+		this.props.dispatch({type: "PLUSMINUS"});
 		if (display.search(/\(-\d+$/) + 1) {
 			display = display.replace(/\(-(\d+$)/, "$1");
 			this.setState({
-			display: display
+				display: display
 			})
 			return;
 		}
@@ -47,20 +52,22 @@ export default class Calc extends React.Component {
 		})
 	}
 	clear () {
+		this.props.dispatch({type: "CLEAR"});
 		this.setState({
 			display: ""
 		})
 	}
 	backspace () {
+		this.props.dispatch({type: "BACKSPACE"});
 		if (this.state.display === "") return;
 		let display = this.state.display.slice(0, -1);
 		this.prevSymbol = display.slice(-1);
-		console.log(display);
 		this.setState({
 			display: display
 		})
 	}
 	res () {
+		this.props.dispatch({type: "RESULT"});
 		let expresssion = this.state.display;
 		let res;
 		if (!Number.isInteger(+this.prevSymbol)) {
@@ -78,9 +85,7 @@ export default class Calc extends React.Component {
 	}
 	soundClick (e) {
 		if ( !(e.target.tagName === "BUTTON") ) return;
-		let click = new Audio();
-		click.src = sound;
-		click.play();
+		this.sound.play();
 
 	}
 	render () {
@@ -105,3 +110,5 @@ export default class Calc extends React.Component {
 		);
 	}
 }
+
+export default connect()(Calc);
