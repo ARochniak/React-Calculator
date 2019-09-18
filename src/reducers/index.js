@@ -9,7 +9,7 @@ export default function reducer (initialState = {display: ""}, action) {
 			if ( !Number.isInteger(+symbol) && !Number.isInteger(+prevSymbol)) {
 				display = display.slice(0,-1);
 			}
-			return {display: initialState.display + action.symbol};
+			return {display: display + action.symbol};
 
 		case "REMOVE LAST SYMBOL":
 			return {display: initialState.display.slice(0,-1)};
