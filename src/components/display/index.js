@@ -1,20 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import './style.css';
 
-let style = {
-	height: 30,
-	fontSize: '1.5em',
-	background: 'white',
-	borderRadius: 5,
-	boxShadow: 'inset 2px 2px 3px rgba(0,0,0,0.5)'
-}
 
-export default class Display extends React.Component {
+class Display extends React.Component {
+	clickHandler () {
+		this.props.dispatch({type: "BACKSPACE"});
+	}
 	render () {
 		return (
-			<p style={style}>{this.props.output} 
-				<span onClick={this.props.backspace}
-				style={{float: 'right', cursor: 'pointer'}}>←</span>
-			</p>
+			<div className="container">
+				<p className="display">{this.props.display}</p>
+				<div className="backspace" 
+					onClick={this.clickHandler.bind(this)}>←</div>
+			</div>	
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {display: state.display}
+};
+
+export default connect(mapStateToProps)(Display);

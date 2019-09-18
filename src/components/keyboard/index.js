@@ -1,41 +1,85 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import soundPath from "./media/click.mp3";
 
-export default class Calc extends React.Component {
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, ".", 9, "+/-"];
+const operators = ["+", "-", "*", "/", "(", ")", "=", "C"];
+
+class Keyboard extends React.Component {
+
+	constructor (props) {
+		super(props);
+		this.sound = new Audio(soundPath);
+		this.soundClick = this.soundClick.bind(this);
+	}
+	
+	soundClick (e) {
+		if ( !(e.target.tagName === "BUTTON") ) return;
+		this.sound.play();
+	}
+
+	contentCreation (content) {
+		const {plusMinus, result, clear, addSymbol} = this.props;
+		const res = content.map( (value, key) => {
+			let clickHandler;
+			switch (value) {
+				case "+/-":
+					clickHandler = plusMinus.bind(this);
+					break;
+				case "=":
+					clickHandler = result.bind(this);
+					break;
+				case "C":
+					clickHandler = clear.bind(this);
+					break;
+				default:
+					clickHandler = addSymbol.bind(this, value);
+			}
+			return (
+				<button key={key} onClick={clickHandler}>{value}</button>
+			)
+		});
+		return res;
+	}
+
 	render () {
 		return (
-			<div className='calcButton'>
+			<div className="calcButton" onClick={this.soundClick}>
 				<div className="digits">
-					<button onClick={this.props.input}>0</button>	
-					<button onClick={this.props.input}>1</button>
-					<button onClick={this.props.input}>2</button><br />
-					<button onClick={this.props.input}>3</button>
-					<button onClick={this.props.input}>4</button>
-					<button onClick={this.props.input}>5</button><br />
-					<button onClick={this.props.input}>6</button>
-					<button onClick={this.props.input}>7</button>
-					<button onClick={this.props.input}>8</button><br />
-					<button onClick={this.props.input}>.</button>
-					<button onClick={this.props.input}>9</button>
-					<button onClick={this.props.plusMinus}>+/-</button>
+					{this.contentCreation(digits)}
 				</div>	
 				<div className="operators">
-					<button onClick={this.props.input}>+
-					</button>
-					<button onClick={this.props.input}>-
-					</button><br />
-					<button onClick={this.props.input}>*
-					</button>
-					<button onClick={this.props.input}>/
-					</button><br />
-					<button onClick={this.props.input}>(
-					</button>
-					<button onClick={this.props.input}>)
-					</button><br />
-					<button onClick={this.props.res}>=
-					</button>
-					<button  onClick={this.props.clear}>C</button>
+					{this.contentCreation(operators)}
 				</div>	
 			</div>
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch) => {
+	return{
+    	addSymbol: (symbol) => {
+    		dispatch({
+			    type: 'ADD SYMBOL',
+			    symbol
+		    })
+    	},
+    	clear: () => {
+		    dispatch({
+			    type: 'CLEAR'
+		    })
+    	},
+    	result: () => {
+		    dispatch({
+			    type: 'RESULT'
+		    })
+		},
+    	plusMinus: () => {
+			dispatch({
+				type: "PLUSMINUS"
+			})
+    	}
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Keyboard);
