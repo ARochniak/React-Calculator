@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/react_redux_Calculator/static/css/main.87bb4fd5.chunk.css",
+    "main.js": "/react_redux_Calculator/static/js/main.c108540f.chunk.js",
+    "main.js.map": "/react_redux_Calculator/static/js/main.c108540f.chunk.js.map",
+    "runtime~main.js": "/react_redux_Calculator/static/js/runtime~main.4f6efc31.js",
+    "runtime~main.js.map": "/react_redux_Calculator/static/js/runtime~main.4f6efc31.js.map",
+    "static/js/2.fb8bc725.chunk.js": "/react_redux_Calculator/static/js/2.fb8bc725.chunk.js",
+    "static/js/2.fb8bc725.chunk.js.map": "/react_redux_Calculator/static/js/2.fb8bc725.chunk.js.map",
+    "index.html": "/react_redux_Calculator/index.html",
+    "precache-manifest.1fec52b68e22396b0f19f8cd9ea6c949.js": "/react_redux_Calculator/precache-manifest.1fec52b68e22396b0f19f8cd9ea6c949.js",
+    "service-worker.js": "/react_redux_Calculator/service-worker.js",
+    "static/css/main.87bb4fd5.chunk.css.map": "/react_redux_Calculator/static/css/main.87bb4fd5.chunk.css.map",
+    "static/media/click.mp3": "/react_redux_Calculator/static/media/click.ce418eca.mp3"
+  }
+}
