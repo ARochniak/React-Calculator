@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './style.css';
 
+const Display = (props) => {
+	const {dispatch, display} = props;
 
-class Display extends React.Component {
-	clickHandler () {
-		this.props.dispatch({type: "BACKSPACE"});
+	const clickHandler = () => {
+		dispatch({type: "BACKSPACE"});
 	}
-	render () {
-		return (
-			<div className="container">
-				<p className="display">{this.props.display}</p>
-				<div className="backspace" 
-					onClick={this.clickHandler.bind(this)}>←</div>
-			</div>	
-		);
-	}
+
+	return (
+		<div className="container">
+			<p className="display">{display}</p>
+			<div className="backspace" 
+				onClick={clickHandler}>←</div>
+		</div>	
+	);
 }
 
 const mapStateToProps = (state) => {

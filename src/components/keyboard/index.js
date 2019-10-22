@@ -5,35 +5,30 @@ import soundPath from "./media/click.mp3";
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, ".", 9, "+/-"];
 const operators = ["+", "-", "*", "/", "(", ")", "=", "C"];
 
-class Keyboard extends React.Component {
+const Keyboard = (props) => {
+	const sound = new Audio(soundPath);
 
-	constructor (props) {
-		super(props);
-		this.sound = new Audio(soundPath);
-		this.soundClick = this.soundClick.bind(this);
-	}
-	
-	soundClick (e) {
+	const soundClick = (e) => {
 		if ( !(e.target.tagName === "BUTTON") ) return;
-		this.sound.play();
+		sound.play();
 	}
 
-	contentCreation (content) {
-		const {plusMinus, result, clear, addSymbol} = this.props;
+	const contentCreation = (content) => {
+		const {plusMinus, result, clear, addSymbol} = props;
 		const res = content.map( (value, key) => {
 			let clickHandler;
 			switch (value) {
 				case "+/-":
-					clickHandler = plusMinus.bind(this);
+					clickHandler = plusMinus;
 					break;
 				case "=":
-					clickHandler = result.bind(this);
+					clickHandler = result;
 					break;
 				case "C":
-					clickHandler = clear.bind(this);
+					clickHandler = clear;
 					break;
 				default:
-					clickHandler = addSymbol.bind(this, value);
+					clickHandler = addSymbol.bind(null,value);
 			}
 			return (
 				<button key={key} onClick={clickHandler}>{value}</button>
@@ -42,18 +37,16 @@ class Keyboard extends React.Component {
 		return res;
 	}
 
-	render () {
-		return (
-			<div className="calcButton" onClick={this.soundClick}>
-				<div className="digits">
-					{this.contentCreation(digits)}
-				</div>	
-				<div className="operators">
-					{this.contentCreation(operators)}
-				</div>	
-			</div>
-		);
-	}
+	return (
+		<div className="calcButton" onClick={soundClick}>
+			<div className="digits">
+				{contentCreation(digits)}
+			</div>	
+			<div className="operators">
+				{contentCreation(operators)}
+			</div>	
+		</div>
+	);
 }
 
 const mapDispatchToProps = (dispatch) => {

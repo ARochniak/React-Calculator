@@ -42,7 +42,7 @@ export default function reducer (initialState = {display: ""}, action) {
 			};
 			return {display: "" + res};
 
-			default:
-				return initialState;
+		default:
+			return initialState;
 	}
 }
