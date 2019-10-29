@@ -1,4 +1,13 @@
-export default function reducer (initialState = {display: ""}, action) {
+interface State {
+	display: string;
+}
+// need to fix !Number.isInteger(+symbol) if set type action as Action
+interface Action {
+	type: string;
+	symbol?: string;
+}
+
+export default function reducer (initialState: State = {display: ""}, action: any) {
 	let display = initialState.display;
 
 	switch (action.type) {

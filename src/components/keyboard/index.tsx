@@ -1,19 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import soundPath from "./media/click.mp3";
 
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, ".", 9, "+/-"];
 const operators = ["+", "-", "*", "/", "(", ")", "=", "C"];
+const sound = new Audio(require("./media/click.mp3"));
 
-const Keyboard = (props) => {
-	const sound = new Audio(soundPath);
+interface KeyboardProps {
+	plusMinus: () => void;
+	result: () => void;
+	clear: () => void;
+	addSymbol: (symbol: string) => void;
+}
 
-	const soundClick = (e) => {
+interface Action {
+	type: string;
+	symbol?: string;
+}
+
+const Keyboard = (props: KeyboardProps) => {
+
+	const soundClick = (e: any) => {
 		if ( !(e.target.tagName === "BUTTON") ) return;
 		sound.play();
 	}
 
-	const contentCreation = (content) => {
+	const contentCreation = (content: any[]) => {
 		const {plusMinus, result, clear, addSymbol} = props;
 		const res = content.map( (value, key) => {
 			let clickHandler;
@@ -49,9 +60,9 @@ const Keyboard = (props) => {
 	);
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: (action: Action) => void) => {
 	return{
-    	addSymbol: (symbol) => {
+    	addSymbol: (symbol: string) => {
     		dispatch({
 			    type: 'ADD SYMBOL',
 			    symbol

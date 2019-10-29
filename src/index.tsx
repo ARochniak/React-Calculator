@@ -13,10 +13,8 @@ const initialState = {
 };
 const store = createStore(reducer, initialState);
 
-window.store = store;
-
 ReactDOM.render((
-	<Provider store={store}>
+	<Provider store={store} >
 		<Calc />
 	</ Provider>
 	), document.getElementById('root'));

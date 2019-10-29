@@ -2,7 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './style.css';
 
-const Display = (props) => {
+interface Param {
+    type: string;
+}
+interface State {
+	display: string;
+}
+interface DisplayProps {
+	dispatch: (action: Param) => void;
+	display: string;
+} 
+
+const Display = (props: DisplayProps) => {
 	const {dispatch, display} = props;
 
 	const clickHandler = () => {
@@ -18,7 +29,7 @@ const Display = (props) => {
 	);
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: State) => {
 	return {display: state.display}
 };
 
